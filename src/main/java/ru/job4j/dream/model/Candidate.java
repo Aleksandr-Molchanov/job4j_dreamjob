@@ -1,4 +1,4 @@
-package ru.job4j.dream;
+package ru.job4j.dream.model;
 
 import java.util.Objects;
 
@@ -8,12 +8,9 @@ public class Candidate {
 
     private String name;
 
-    private String resume;
-
-    public Candidate(int id, String name, String resume) {
+    public Candidate(int id, String name) {
         this.id = id;
         this.name = name;
-        this.resume = resume;
     }
 
     public int getId() {
@@ -32,14 +29,6 @@ public class Candidate {
         this.name = name;
     }
 
-    public String getResume() {
-        return resume;
-    }
-
-    public void setResume(String resume) {
-        this.resume = resume;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -50,13 +39,12 @@ public class Candidate {
         }
         Candidate candidate = (Candidate) o;
         return id == candidate.id
-                && Objects.equals(name, candidate.name)
-                && Objects.equals(resume, candidate.resume);
+                && Objects.equals(name, candidate.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, resume);
+        return Objects.hash(id, name);
     }
 
     @Override
@@ -64,7 +52,6 @@ public class Candidate {
         return "Candidate{"
                 + "id=" + id
                 + ", name='" + name + '\''
-                + ", resume='" + resume + '\''
                 + '}';
     }
 }
