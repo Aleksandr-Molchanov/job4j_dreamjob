@@ -12,6 +12,8 @@ public class PostStore {
 
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
 
+    private int size = 3;
+
     private PostStore() {
         posts.put(1, new Post(1, "Junior Java Job", "Description Junior Java Job"));
         posts.put(2, new Post(2, "Middle Java Job", "Description Middle Java Job"));
@@ -24,5 +26,9 @@ public class PostStore {
 
     public Collection<Post> findAll() {
         return posts.values();
+    }
+
+    public void add(Post post) {
+        posts.put(++size, post);
     }
 }
