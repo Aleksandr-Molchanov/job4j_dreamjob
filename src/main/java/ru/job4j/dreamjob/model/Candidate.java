@@ -10,6 +10,15 @@ public class Candidate {
     private String desc;
     private LocalDate created;
 
+    public Candidate() {
+    }
+
+    public Candidate(int id, String name) {
+        this.id = id;
+        this.name = name;
+        this.created = LocalDate.now();
+    }
+
     public Candidate(int id, String name, String desc) {
         this.id = id;
         this.name = name;
