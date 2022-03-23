@@ -61,6 +61,14 @@ public class Post implements Serializable {
         this.created = created;
     }
 
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
     public City getCity() {
         return city;
     }
