@@ -1,13 +1,16 @@
 package ru.job4j.dreamjob.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Post {
+public class Post implements Serializable {
     private int id;
     private String name;
     private String description;
     private LocalDate created;
+    private boolean visible;
+    private City city;
 
     public Post() {
     }
@@ -18,11 +21,12 @@ public class Post {
         this.created = LocalDate.now();
     }
 
-    public Post(int id, String name, String description) {
+    public Post(int id, String name, String description, LocalDate created, City city) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.created = LocalDate.now();
+        this.created = created;
+        this.city = city;
     }
 
     public int getId() {
@@ -57,6 +61,14 @@ public class Post {
         this.created = created;
     }
 
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -67,13 +79,15 @@ public class Post {
         }
         Post post = (Post) o;
         return id == post.id
+                && visible == post.visible
                 && Objects.equals(name, post.name)
                 && Objects.equals(description, post.description)
-                && Objects.equals(created, post.created);
+                && Objects.equals(created, post.created)
+                && Objects.equals(city, post.city);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, created);
+        return Objects.hash(id, name, description, created, visible, city);
     }
 }
