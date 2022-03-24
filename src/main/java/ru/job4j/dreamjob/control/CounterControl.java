@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @ThreadSafe
 @RestController
 public class CounterControl {
-
     private final AtomicInteger total = new AtomicInteger(0);
 
     @GetMapping("/count")
