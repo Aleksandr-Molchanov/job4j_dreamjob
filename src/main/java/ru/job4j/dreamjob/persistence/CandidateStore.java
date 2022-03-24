@@ -3,7 +3,9 @@ package ru.job4j.dreamjob.persistence;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Candidate;
+import ru.job4j.dreamjob.model.City;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,9 +20,9 @@ public class CandidateStore {
     private final AtomicInteger size = new AtomicInteger(3);
 
     private CandidateStore() {
-        candidates.put(1, new Candidate(1, "Александр", "Description Александр"));
-        candidates.put(2, new Candidate(2, "Алексей", "Description Алексей"));
-        candidates.put(3, new Candidate(3, "Ольга", "Description Ольга"));
+        candidates.put(1, new Candidate(1, "Александр", "Description Александр", LocalDate.now(), new City()));
+        candidates.put(2, new Candidate(2, "Алексей", "Description Алексей", LocalDate.now(), new City()));
+        candidates.put(3, new Candidate(3, "Ольга", "Description Ольга", LocalDate.now(), new City()));
     }
 
     public Collection<Candidate> findAll() {
