@@ -34,7 +34,9 @@ public class CandidateStore {
     }
 
     public void add(Candidate candidate) {
-        candidates.put(size.incrementAndGet(), candidate);
+        int id = size.incrementAndGet();
+        candidate.setId(id);
+        candidates.put(id, candidate);
     }
 
     public void create(Candidate candidate) {

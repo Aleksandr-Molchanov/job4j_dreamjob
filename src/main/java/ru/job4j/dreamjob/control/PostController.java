@@ -53,7 +53,7 @@ public class PostController {
 
     @PostMapping("/updatePost")
     public String updatePost(@ModelAttribute Post post) {
-        postService.update(post);
+        postService.add(post);
         return "redirect:/posts";
     }
 
