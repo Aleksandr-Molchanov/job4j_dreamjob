@@ -17,12 +17,12 @@ public class CandidateStore {
 
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
 
-    private final AtomicInteger size = new AtomicInteger(3);
+    private final AtomicInteger size = new AtomicInteger(0);
 
     private CandidateStore() {
-        candidates.put(1, new Candidate(1, "Александр", "Description Александр", LocalDate.now(), new City()));
-        candidates.put(2, new Candidate(2, "Алексей", "Description Алексей", LocalDate.now(), new City()));
-        candidates.put(3, new Candidate(3, "Ольга", "Description Ольга", LocalDate.now(), new City()));
+        candidates.put(1, new Candidate(size.incrementAndGet(), "Александр", "Description Александр", LocalDate.now(), new City()));
+        candidates.put(2, new Candidate(size.incrementAndGet(), "Алексей", "Description Алексей", LocalDate.now(), new City()));
+        candidates.put(3, new Candidate(size.incrementAndGet(), "Ольга", "Description Ольга", LocalDate.now(), new City()));
     }
 
     public Collection<Candidate> findAll() {
