@@ -4,6 +4,7 @@ import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.City;
 import ru.job4j.dreamjob.model.Post;
+import ru.job4j.dreamjob.service.CityService;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -19,10 +20,13 @@ public class PostStore {
 
     private final AtomicInteger size = new AtomicInteger(0);
 
-    private PostStore() {
-        posts.put(1, new Post(size.incrementAndGet(), "Junior Java Job", "Description Junior Java Job", LocalDate.now(), new City()));
-        posts.put(2, new Post(size.incrementAndGet(), "Middle Java Job", "Description Middle Java Job", LocalDate.now(), new City()));
-        posts.put(3, new Post(size.incrementAndGet(), "Senior Java Job", "Description Senior Java Job", LocalDate.now(), new City()));
+    private final CityService cityService;
+
+    private PostStore(CityService cityService) {
+        this.cityService = cityService;
+        posts.put(1, new Post(size.incrementAndGet(), "Junior Java Job", "Description Junior Java Job", LocalDate.now(), cityService.findById(1)));
+        posts.put(2, new Post(size.incrementAndGet(), "Middle Java Job", "Description Middle Java Job", LocalDate.now(), cityService.findById(2)));
+        posts.put(3, new Post(size.incrementAndGet(), "Senior Java Job", "Description Senior Java Job", LocalDate.now(), cityService.findById(3)));
     }
 
     public Collection<Post> findAll() {
@@ -36,6 +40,8 @@ public class PostStore {
     public void add(Post post) {
         int id = size.incrementAndGet();
         post.setId(id);
+        post.setCreated(LocalDate.now());
+        post.setCity(cityService.findById(post.getCity().getId()));
         posts.put(id, post);
     }
 
@@ -44,6 +50,8 @@ public class PostStore {
     }
 
     public void update(Post post) {
-        create(post);
+        post.setCreated(LocalDate.now());
+        post.setCity(cityService.findById(post.getCity().getId()));
+        posts.put(post.getId(), post);
     }
 }

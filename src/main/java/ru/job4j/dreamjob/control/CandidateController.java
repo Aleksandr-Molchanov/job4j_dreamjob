@@ -38,7 +38,7 @@ public class CandidateController {
 
     @GetMapping("/addCandidate")
     public String addCandidate(Model model) {
-        model.addAttribute("candidate", new Candidate(0, "Заполните поле", "Заполните поле", LocalDate.now(), new City()));
+        model.addAttribute("candidate", new Candidate());
         model.addAttribute("cities", cityService.getAllCities());
         return "addCandidate";
     }
