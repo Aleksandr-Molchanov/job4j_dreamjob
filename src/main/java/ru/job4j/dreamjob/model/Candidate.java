@@ -17,6 +17,12 @@ public class Candidate implements Serializable {
     public Candidate() {
     }
 
+    public Candidate(int id, String name, String desc) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+    }
+
     public Candidate(int id, String name, String desc, LocalDate created, City city) {
         this.id = id;
         this.name = name;
