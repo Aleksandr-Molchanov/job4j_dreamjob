@@ -28,7 +28,7 @@ public class CandidateDBStoreTest {
         store.create(candidate1);
         store.create(candidate2);
         List<Candidate> candidateInDb = store.findAll();
-        //assertThat(candidateInDb.get(0).getName(), is(candidate1.getName()));
+        assertThat(candidateInDb.get(0).getName(), is(candidate1.getName()));
         assertThat(candidateInDb.get(1).getName(), is(candidate2.getName()));
         assertThat(candidateInDb.get(0).getDesc(), is(candidate1.getDesc()));
         assertThat(candidateInDb.get(1).getDesc(), is(candidate2.getDesc()));
