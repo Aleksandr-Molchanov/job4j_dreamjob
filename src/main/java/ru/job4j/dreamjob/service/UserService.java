@@ -6,6 +6,7 @@ import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.persistence.UserDBStore;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @ThreadSafe
 @Service
@@ -21,11 +22,11 @@ public class UserService {
         return store.findAll();
     }
 
-    public User findUserByEmail(String email) {
-        return store.findByEmail(email);
+    public Optional<User> findUserByEmailAndPwd(String email, String password) {
+        return store.findByEmailAndPwd(email, password);
     }
 
-    public User add(User user) {
+    public Optional<User> add(User user) {
         return store.add(user);
     }
 

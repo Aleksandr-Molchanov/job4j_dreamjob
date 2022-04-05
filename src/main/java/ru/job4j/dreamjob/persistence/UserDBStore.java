@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserDBStore {
@@ -36,7 +37,7 @@ public class UserDBStore {
     }
 
 
-    public User add(User user) {
+    public Optional<User> add(User user) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("INSERT INTO user(email, password) VALUES (?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
@@ -52,7 +53,7 @@ public class UserDBStore {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return user;
+        return Optional.of(user);
     }
 
     public void create(User user) {
@@ -72,19 +73,20 @@ public class UserDBStore {
         }
     }
 
-    public User findByEmail(String email) {
+    public Optional<User> findByEmailAndPwd(String email, String password) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM user WHERE email = ?")
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM user WHERE email = ? and password = ?")
         ) {
             ps.setString(1, email);
+            ps.setString(2, password);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return new User(it.getInt("id"), it.getString("email"), it.getString("password"));
+                    return Optional.of(new User(it.getInt("id"), it.getString("email"), it.getString("password")));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 }
