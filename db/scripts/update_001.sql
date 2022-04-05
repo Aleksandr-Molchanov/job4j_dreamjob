@@ -9,3 +9,9 @@ CREATE TABLE if not exists candidate (
     name TEXT,
     description TEXT
 );
+
+CREATE TABLE if not exists user (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE,
+    password TEXT
+);
