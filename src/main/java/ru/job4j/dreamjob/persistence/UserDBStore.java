@@ -52,8 +52,9 @@ public class UserDBStore {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            user = null;
         }
-        return Optional.of(user);
+        return Optional.ofNullable(user);
     }
 
     public void create(User user) {
