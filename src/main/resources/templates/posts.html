@@ -27,15 +27,16 @@
             <div class="navbar-nav">
                 <a class="nav-item nav-link" href="#">Главная <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link active" th:href="@{/posts}">Вакансии</a>
-                <a class="nav-item nav-link" th:href="@{/addPost}">Добавить вакансию</a>
+                <a class="nav-item nav-link" th:href="@{/fromAddPost}">Добавить вакансию</a>
                 <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
-                <a class="nav-item nav-link" th:href="@{/addCandidate}">Добавить кандидата</a>
-                <a class="nav-item nav-link" th:if="${user.email == 'Гость'}" th:href="@{/loginPage}">
-                    <span th:text="${user.email}"></span>
+                <a class="nav-item nav-link" th:href="@{/fromAddCandidate}">Добавить кандидата</a>
+                <a th:if="${user.name == 'Гость'}" class="nav-item nav-link" th:href="@{/formRegistration}">Регистрация</a>
+                <a class="nav-item nav-link" th:if="${user.name == 'Гость'}" th:href="@{/loginPage}">
+                    <span th:text="${user.name}"></span>
                     <span> | Войти</span>
                 </a>
-                <a class="nav-item nav-link" th:if="${user.email != 'Гость'}" th:href="@{/logout}">
-                    <span th:text="${user.email}"></span>
+                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}" th:href="@{/logout}">
+                    <span th:text="${user.name}"></span>
                     <span> | Выйти</span>
                 </a>
             </div>

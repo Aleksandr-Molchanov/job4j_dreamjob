@@ -37,19 +37,19 @@ public class CandidateController {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             user = new User();
-            user.setEmail("Гость");
+            user.setName("Гость");
         }
         model.addAttribute("user", user);
         model.addAttribute("candidates", candidateService.findAll());
         return "candidates";
     }
 
-    @GetMapping("/addCandidate")
-    public String addCandidate(Model model, HttpSession session) {
+    @GetMapping("/fromAddCandidate")
+    public String fromAddCandidate(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             user = new User();
-            user.setEmail("Гость");
+            user.setName("Гость");
         }
         model.addAttribute("user", user);
         model.addAttribute("candidate", new Candidate());
@@ -58,7 +58,7 @@ public class CandidateController {
     }
 
     @PostMapping("/saveCandidate")
-    public String savePost(@ModelAttribute Candidate candidate) {
+    public String saveCandidate(@ModelAttribute Candidate candidate) {
         candidateService.add(candidate);
         return "redirect:/candidates";
     }
@@ -68,7 +68,7 @@ public class CandidateController {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             user = new User();
-            user.setEmail("Гость");
+            user.setName("Гость");
         }
         model.addAttribute("user", user);
         model.addAttribute("candidate", candidateService.findById(id));
@@ -77,7 +77,9 @@ public class CandidateController {
     }
 
     @PostMapping("/updateCandidate")
-    public String updateCandidate(@ModelAttribute Candidate candidate) {
+    public String updateCandidate(@ModelAttribute Candidate candidate,
+                                  @RequestParam("file") MultipartFile file) throws IOException {
+        candidate.setPhoto(file.getBytes());
         candidateService.update(candidate);
         return "redirect:/candidates";
     }

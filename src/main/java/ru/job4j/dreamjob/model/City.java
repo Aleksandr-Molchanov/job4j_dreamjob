@@ -9,6 +9,10 @@ public class City {
     public City() {
     }
 
+    public City(String name) {
+        this.name = name;
+    }
+
     public City(int id, String name) {
         this.id = id;
         this.name = name;

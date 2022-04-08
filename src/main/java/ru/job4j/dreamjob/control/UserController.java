@@ -24,14 +24,44 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/formRegistration")
+    public String formRegistration(Model model,
+                                   @RequestParam(name = "fail", required = false) Boolean fail,
+                                   HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("fail", fail != null);
+        return "registration";
+    }
+
     @PostMapping("/registration")
     public String registration(Model model, @ModelAttribute User user) {
         Optional<User> regUser = userService.add(user);
         if (regUser.isEmpty()) {
             model.addAttribute("message", "Пользователь с такой почтой уже существует");
-            return "redirect:/fail";
+            return "redirect:/formRegistration?fail=true";
         }
         return "redirect:/success";
+    }
+
+    @GetMapping("/success")
+    public String success(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("user", user);
+        return "success";
+    }
+
+    @PostMapping("/successRedirect")
+    public String successRedirect(Model model) {
+        return "redirect:/index";
     }
 
     @GetMapping("/loginPage")

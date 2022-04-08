@@ -24,9 +24,6 @@ public class CandidateStore {
 
     private CandidateStore(CityService cityService) {
         this.cityService = cityService;
-        candidates.put(1, new Candidate(size.incrementAndGet(), "Александр", "Description Александр", LocalDate.now(), cityService.findById(1)));
-        candidates.put(2, new Candidate(size.incrementAndGet(), "Алексей", "Description Алексей", LocalDate.now(), cityService.findById(2)));
-        candidates.put(3, new Candidate(size.incrementAndGet(), "Ольга", "Description Ольга", LocalDate.now(), cityService.findById(3)));
     }
 
     public Collection<Candidate> findAll() {

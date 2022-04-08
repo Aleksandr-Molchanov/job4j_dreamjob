@@ -23,11 +23,18 @@ public class UserDBStore {
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM user")
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM users")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    users.add(new User(it.getInt("id"), it.getString("email"), it.getString("password")));
+                    users.add(
+                            new User(
+                                    it.getInt("id"),
+                                    it.getString("name"),
+                                    it.getString("email"),
+                                    it.getString("password")
+                            )
+                    );
                 }
             }
         } catch (Exception e) {
@@ -39,11 +46,12 @@ public class UserDBStore {
 
     public Optional<User> add(User user) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO user(email, password) VALUES (?, ?)",
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO users(name, email, password) VALUES (?, ?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
-            ps.setString(1, user.getEmail());
-            ps.setString(2, user.getPassword());
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -63,7 +71,7 @@ public class UserDBStore {
 
     public void update(User user) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("UPDATE user SET email = ?, password = ? WHERE id = ?")
+             PreparedStatement ps =  cn.prepareStatement("UPDATE users SET email = ?, password = ? WHERE id = ?")
         ) {
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPassword());
@@ -76,13 +84,20 @@ public class UserDBStore {
 
     public Optional<User> findByEmailAndPwd(String email, String password) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM user WHERE email = ? and password = ?")
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM users WHERE email = ? and password = ?")
         ) {
             ps.setString(1, email);
             ps.setString(2, password);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return Optional.of(new User(it.getInt("id"), it.getString("email"), it.getString("password")));
+                    return Optional.of(
+                            new User(
+                                    it.getInt("id"),
+                                    it.getString("name"),
+                                    it.getString("email"),
+                                    it.getString("password")
+                            )
+                    );
                 }
             }
         } catch (Exception e) {

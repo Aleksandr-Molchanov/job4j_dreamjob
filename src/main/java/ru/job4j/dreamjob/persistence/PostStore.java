@@ -24,9 +24,6 @@ public class PostStore {
 
     private PostStore(CityService cityService) {
         this.cityService = cityService;
-        posts.put(1, new Post(size.incrementAndGet(), "Junior Java Job", "Description Junior Java Job", LocalDate.now(), cityService.findById(1)));
-        posts.put(2, new Post(size.incrementAndGet(), "Middle Java Job", "Description Middle Java Job", LocalDate.now(), cityService.findById(2)));
-        posts.put(3, new Post(size.incrementAndGet(), "Senior Java Job", "Description Senior Java Job", LocalDate.now(), cityService.findById(3)));
     }
 
     public Collection<Post> findAll() {

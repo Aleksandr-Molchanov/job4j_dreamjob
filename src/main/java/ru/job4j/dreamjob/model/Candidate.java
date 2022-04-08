@@ -23,12 +23,14 @@ public class Candidate implements Serializable {
         this.desc = desc;
     }
 
-    public Candidate(int id, String name, String desc, LocalDate created, City city) {
+    public Candidate(int id, String name, String desc, LocalDate created, boolean visible, City city, byte[] photo) {
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.created = created;
+        this.visible = visible;
         this.city = city;
+        this.photo = photo;
     }
 
     public int getId() {
@@ -100,12 +102,11 @@ public class Candidate implements Serializable {
                 && visible == candidate.visible
                 && Objects.equals(name, candidate.name)
                 && Objects.equals(desc, candidate.desc)
-                && Objects.equals(created, candidate.created)
-                && Objects.equals(city, candidate.city);
+                && Objects.equals(created, candidate.created);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, desc, created, visible, city);
+        return Objects.hash(id, name, desc, created, visible);
     }
 }
