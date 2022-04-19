@@ -9,7 +9,7 @@ public class Candidate implements Serializable {
     private int id;
     private String name;
     private String desc;
-    private LocalDate created;
+    private LocalDate created = LocalDate.now();
     private boolean visible;
     private City city;
     private byte[] photo;
@@ -23,14 +23,14 @@ public class Candidate implements Serializable {
         this.desc = desc;
     }
 
-    public Candidate(int id, String name, String desc, LocalDate created, boolean visible, City city, byte[] photo) {
+    public Candidate(int id, String name, String desc, LocalDate created, boolean visible, byte[] photo, City city) {
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.created = created;
         this.visible = visible;
-        this.city = city;
         this.photo = photo;
+        this.city = city;
     }
 
     public int getId() {

@@ -8,7 +8,7 @@ public class Post implements Serializable {
     private int id;
     private String name;
     private String description;
-    private LocalDate created;
+    private LocalDate created = LocalDate.now();
     private boolean visible;
     private City city;
 

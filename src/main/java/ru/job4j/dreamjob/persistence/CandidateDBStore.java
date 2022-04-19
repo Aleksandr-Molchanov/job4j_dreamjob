@@ -26,7 +26,7 @@ public class CandidateDBStore {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "SELECT c.id, c.name, c.description, c.created, c.visible, ci.name, c.photo AS city_name FROM candidates AS c "
+                     "SELECT c.id, c.name, c.description, c.created, c.visible, c.photo, ci.name AS city_name FROM candidates AS c "
                              + "JOIN city ci ON ci.id = c.city_id "
                              + "ORDER BY c.id")
         ) {
@@ -38,8 +38,8 @@ public class CandidateDBStore {
                             it.getString("description"),
                             it.getTimestamp("created").toLocalDateTime().toLocalDate(),
                             it.getBoolean("visible"),
-                            new City(it.getString("city_name")),
-                            it.getBytes("photo"))
+                            it.getBytes("photo"),
+                            new City(it.getString("city_name")))
                     );
                 }
             }
@@ -96,7 +96,7 @@ public class CandidateDBStore {
     public Candidate findById(int id) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "SELECT c.id, c.name, c.description, c.created, c.visible, ci.name, c.photo AS city_name FROM candidates AS c "
+                     "SELECT c.id, c.name, c.description, c.created, c.visible, c.photo, ci.name AS city_name FROM candidates AS c "
                              + "JOIN city ci ON ci.id = c.city_id "
                              + "WHERE c.id = ?")
         ) {
@@ -106,11 +106,11 @@ public class CandidateDBStore {
                     return new Candidate(
                             it.getInt("id"),
                             it.getString("name"),
-                            it.getString("desc"),
+                            it.getString("description"),
                             it.getTimestamp("created").toLocalDateTime().toLocalDate(),
                             it.getBoolean("visible"),
-                            new City(it.getString("city_name")),
-                            it.getBytes("photo"));
+                            it.getBytes("photo"),
+                            new City(it.getString("city_name")));
                 }
             }
         } catch (Exception e) {
